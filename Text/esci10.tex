@@ -137,12 +137,12 @@
   % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
   % will default to the driver specified in the system graphics.cfg if no
   % driver is specified.
-  % \usepackage[dvips]{graphicx}
+  \usepackage[dvips]{graphicx}
   % declare the path(s) where your graphic files are
-  % \graphicspath{{../eps/}}
+  \graphicspath{{./figures/}}
   % and their extensions so you won't have to specify these with
   % every instance of \includegraphics
-  % \DeclareGraphicsExtensions{.eps}
+  \DeclareGraphicsExtensions{.eps}
 \fi
 % graphicx was written by David Carlisle and Sebastian Rahtz. It is
 % required if you want graphics, photos, etc. graphicx.sty is already
@@ -170,7 +170,7 @@
 
 % *** MATH PACKAGES ***
 %
-%\usepackage[cmex10]{amsmath}
+\usepackage[cmex10]{amsmath}
 % A popular package from the American Mathematical Society that provides
 % many useful and powerful commands for dealing with mathematics. If using
 % it, be sure to load this package with the cmex10 option to ensure that
@@ -325,7 +325,7 @@
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
-%\usepackage{url}
+\usepackage{url}
 % url.sty was written by Donald Arseneau. It provides better support for
 % handling and breaking URLs. url.sty is already installed on most LaTeX
 % systems. The latest version can be obtained at:
@@ -352,7 +352,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Bare Demo of IEEEtran.cls for Conferences}
+\title{A Revolutionary New Paradigm for the Reduction and Analysis of Astronomical Images}
 
 
 % author names and affiliations
@@ -361,7 +361,7 @@
 \author{\IEEEauthorblockN{Scott Michael}
 \IEEEauthorblockA{Indiana University\\
 Bloomington, Indiana 47408\\
-Email: scamicha@indiana.edul}
+Email: scamicha@indiana.edu}
 \and
 \IEEEauthorblockN{Homer Simpson}
 \IEEEauthorblockA{Twentieth Century Fox\\
@@ -437,25 +437,33 @@ The abstract goes here.
 
 
 
-\section{Introduction}
-% no \IEEEPARstart
-This demo file is intended to serve as a ``starter file''
-for IEEE conference papers produced under \LaTeX\ using
-IEEEtran.cls version 1.7 and later.
-% You must have at least 2 lines in the paragraph with the drop letter
-% (should never be an issue)
-I wish you the best of success.
+\section{Introduction}\label{sec:intro}
+However, cutting-edge instruments that are just beginning to come online, as well as instruments planned for the not too distant future will produce data in volumes that a single investigator can not hope to store, analyze, and archive on their own. Currently, the Pan-STARRS gigapixel imager is producing more than 1 TB of data per day. The Solar Dynamics Observatory, a space based observatory, transmits 1.5 TB of raw data to the ground every day. Other instruments in their design or construction phases include the One Degree Imager, capable of producing 4 TB per day; the Large Synoptic Sky Survey, which will produce 30 TB of data per day; and the Joint Dark Energy Mission, a space based observatory capable of producing several terabytes of data per day. Clearly, these data volumes are much larger than the typical astronomer is accustomed to dealing with and most observational astronomers lack access to the resources that would be required to handle these amounts of data. 
 
-\hfill mds
- 
-\hfill January 11, 2007
+To address this changing landscape of data output from leading scientific observatories, we propose a new paradigm for the storage, analysis and archiving of astronomical digital image data. By taking advantage of 
 
-\subsection{Subsection Heading Here}
-Subsection text here.
+The rest of this paper is arranged as follows: \S\ref{sec:history} contains a brief history of digital imaging in astronomy and the reduction and analysis of those images. In \S\ref{sec:current} we describe the current paradigm employed by astronomers for dealing with imaging data. We outline some upcoming problems with this paradigm in light of current state-of-the-art imagers and planned imagers of the near future in \S\ref{sec:problem}. We detail a new paradigm for the processing of astronomical images in \S\ref{sec:rev}. In \S\ref{sec:ODI} we describe how this new paradigm can apply to the ODI instrument. Finally, in \S\ref{sec:future} we explore possible future directions and in \S\ref{sec:conclusions} we present our final conclusions.
 
+\section{A Brief History of Digital Image Processing in Astronomy}\label{sec:history}
 
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
+\section{The Current Paradigm for the Reduction of Astronomical Images}\label{sec:current}
+
+\section{Some Problems with the Current Paradigm}\label{sec:problem}
+
+\section{A New Paradigm for Astronomical Reduction and Analysis}\label{sec:rev}
+
+\section{ODI as a Use Case of the New Paradigm}\label{sec:ODI}
+In this section we examine the ODI instrument as a test case for the new paradigm of astronomical image processing. We first describe the major components which would make up a system that could enable the new paradigm, and walk through an example workflow with the new system. 
+\subsection{ODI System Major Components}\label{sec:components}
+The design of the ODI data reduction pipeline and archive system can be though of as having five major hardware and software components. These are the network used to transfer data from the instrument and to compute facilities, the compute facilities that are used to do the actual reduction and analysis, the temporary and long term storage used to hold data for analysis and permanently store raw data, the software orchestration layer that distributes compute jobs and input data to the various compute facilities, and the software reduction and analysis software, or pipeline engine, that contains the actual astronomical algorithms to be used to analyze the data.   
+
+In our design the network is mainly utilized for three purposes; transferring data from the instrument to the Data Capacitor and archive, transmitting raw data and results during the processing phase, and distributing the data products to individual researchers. Since researches from all over the world can make use of the data products in the archive, it is difficult to characterize the network used to deliver the final data products, we will assume that typical requests for data products will have less bandwidth than we can provide. Due to the fact that the network in this case is highly variable depending on the individual researcher's institution, we will focus on the first two of these purposes. 
+
+The ODI instrument will be installed on the 3.5 meter telescope at the WIYN observatory on Kitt Peak. Once raw data is collected by the instrument 
+
+\section{Future Directions}\label{sec:future}
+
+\section{Conclusion}\label{sec:conclusion}
 
 
 % An example of a floating figure using the graphicx package.
@@ -471,15 +479,15 @@ Subsubsection text here.
 % option should be used if it is desired that the figures are to be
 % displayed while in draft mode.
 %
-%\begin{figure}[!t]
-%\centering
-%\includegraphics[width=2.5in]{myfigure}
+\begin{figure*}[t]
+\centering
+\includegraphics[width=6in]{network_throughput}
 % where an .eps filename suffix will be assumed under latex, 
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
-%\caption{Simulation Results}
-%\label{fig_sim}
-%\end{figure}
+\caption{Simulation Results}
+\label{fig:network}
+\end{figure*}
 
 % Note that IEEE typically puts floats only at the top, even when this
 % results in a large percentage of a column being occupied by floats.
@@ -539,11 +547,6 @@ Subsubsection text here.
 % exclusively. Note that, LaTeX2e, unlike IEEE journals/conferences, places
 % footnotes above bottom floats. This can be corrected via the \fnbelowfloat
 % command of the stfloats package.
-
-
-
-\section{Conclusion}
-The conclusion goes here.
 
 
 
