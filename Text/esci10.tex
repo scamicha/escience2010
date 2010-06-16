@@ -134,7 +134,9 @@ The rest of this paper is arranged as follows: \S\ref{sec:current} describes the
 
 \section{The Current Paradigm for the Reduction of Astronomical Images}\label{sec:current}
 
-Today most of the hundreds of astronomical optical imaging instruments at medium to large scale observatories are operated in one of two modes: visitor mode or survey mode. We make this distinction since the data generated in each of these modes is often treated differently. An instrument operated survey mode is dedicated to surveying some portion of the sky with a specific cadence, depth, and filter complement. Since the observing pattern is known in advance, the acquisition of appropriate calibrations can be incorporated into the plan. In visitor mode, individual researchers are granted telescope time, or blocks, which they can use to perform their investigations. In this case, the researcher is responsible for obtaining her own calibrations, which will be suitable for her science. 
+Today most of the hundreds of astronomical optical imaging instruments at medium to large scale observatories are operated in one of two modes: survey mode or visitor mode. We make this distinction since the data generated in each of these modes is often treated differently. An instrument operated survey mode is dedicated to surveying some portion of the sky with a specific cadence, depth, and filter complement. Since the observing pattern is known in advance, the acquisition of appropriate calibrations can be incorporated into the plan. In visitor mode, individual researchers are granted telescope time, or blocks, which they can use to perform their investigations. In this case, the researcher is responsible for obtaining her own calibrations, which will be suitable for her science. 
+
+\subsection{Division of Pipeline Processing}\label{sec:tiers}
 
 With either survey mode data or visitor mode data, an investigator must process the data through several stages and analyze the results in order to meet their scientific goals. We divide the process into logically separated ``Tiers'' which are defined as follows \cite{PASRD}:
 \begin{description}[\IEEEsetlabelwidth{\bf Tier 0}\IEEEusemathlabelsep] 
@@ -150,11 +152,21 @@ production of catalogs (1\% photometry accuracy).
 examining sources, artificial star tests), display, photometry, etc.
 \end{description}
 
-These Tiers give conceptual distinctions in the overall image processing workflow. Tier 0 is an onsite verification stage which validates the scientific value of the image. This is a very basic step in processing and generally occurs at the observatory, we will mainly concern ourselves with subsequent Tiers. Tier 1 is the most basic reduction of an astronomical image, removal of the instrument signature. In this stage the researcher is primarily concerned with correcting anomalies introduced by a variety of sources (e.g. the atmosphere, optical system, electronics, etc.) and producing a ``science quality'' image. Tier 1 processing is typically formulaic and deterministic. Tier 2 represents 
+These Tiers give conceptual distinctions in the overall image processing workflow. Tier 0 is an onsite verification stage which validates the scientific value of the image. This is a very basic step in processing and generally occurs at the observatory, we will mainly concern ourselves with subsequent Tiers. Tier 1 is the most basic reduction of an astronomical image, removal of the instrument signature. In this stage the researcher is primarily concerned with correcting anomalies introduced by a variety of sources (e.g. the atmosphere, optical system, electronics, etc.) and producing a ``science quality'' image. Tier 1 processing is typically formulaic and deterministic. It should require no end user input and can be automatically performed once the data and calibrations are available. Once completed results should be checked by an image processing expert to ensure scientific validity.
+
+ Tier 2 represents more advanced processing of individual frames and the combination of multiple frames. For this stage of processing, end user interaction is required. The end user might want to filter the image according to a function he defines or stack a set of images from the same region in different filters. The key distinction between Tier 2 operations and Tier 3 operations is that Tier 2 operations can be scripted and set up as batch jobs. No direct interaction with the images is required (i.e. region selection, contrast scaling, etc.). Although the end user should be able to view the images at some rudimentary level (e.g. pan and zoom) for all of the Tiers, Tier 3 is reserved for intensive interactive image manipulation.
+
+These boundaries are somewhat artificial as they are mainly driven by the technological solution employed in each Tier, however they do provide convenient divisions for the pipeline processing. Tier 1 can be completely automated, Tier 2 requires end user input but the requirements of the user interface (UI) are limited to selection of images and entry of parameters, and Tier 3 required fully interactive manipulation of the data. 
+
+\subsection{Data Distribution and Reduction}\label{sec:reduction}
+
+Regardless of the type of observing strategy employed by the observatory, most observatories do not supply computational services for an end user to perform Tier 2 and Tier 3 data reductions. In the case of survey mode operations, many observatories perform a standard set of Tier 1 reductions and provide the Tier 1 data products, and in most cases the raw data, to the researchers. In many cases the data is accumulated for some time and released in large chunks called{\it data releases}, as in the Sloan Digital Sky Survey \cite{york2000}. Data is made available to researchers electronically or, in some cases with large data volumes, via physical media. The individual researcher is then responsible for the Tier 2 and 3 processing as well as storing all of the data products.
+
+In the case of visitor mode observing, the situation is much the same. However, since observations patterns are not standardized and standard calibration product are typically not obtained by the observatory, it is common for the investigator to receive the raw data and calibrations only. She is then responsible for all of the processing (i.e. Tiers 1, 2, and 3). Data can be made available electronically via a website but, since a researcher typically visits the observatory for the observing block, the data is often provided to the researcher on-site via physical media. The researcher is then responsible for retrieving, storing, and organizing the raw data, as well as processing the data through all of the Tiers. Many individual researchers have invented their own methods for automating this process and tailoring it to their specific scientific goals. The National Optical Astronomy Observatory (NOAO) has made publicly available a toolkit to perform these types of reductions. The Image Reduction and Analysis Facility (IRAF) is a general purpose software system for the reduction and analysis of astronomical data.
 
 \section{A New Paradigm for Astronomical Reduction and Analysis}\label{sec:rev}
 
-Although the method of data processing described in \S\ref{sec:current} has been extremely successful in advancing astronomy for a long time, many of the new imagers described in \S\ref{sec:intro} will produce such large volumes of data that individual astronomers will have a difficult time
+Although the method of data processing described in \S\ref{sec:current} has been extremely successful in advancing astronomy for several decades, many of the new imagers described in \S\ref{sec:intro} will produce such large volumes of data that individual astronomers will have a difficult time
 processing their data by themselves. 
 
 \section{ODI as a Use Case of the New Paradigm}\label{sec:ODI}
@@ -199,7 +211,7 @@ The ODI gateway will be very similar in many ways to the LEAD Science Gateway (L
 
 \subsection{A Detailed Workflow for ODI Images}\label{sec:workflow}
 
-Here we detail the steps in a workflow for processing a set of images. For convenience, we define several conceptual stages of the reduction and analysis called ``Tiers". Each of the Tiers represent different levels of the reduction workflow and require different levels of cyberinfrastructure to support. The Tiers are defined in the ODI Pipeline Software and Archive Science Requirements Document 
+Here we detail the steps in a workflow for processing a set of images. For convenience, we define several conceptual stages of the reduction and analysis called ``Tier''. Each of the Tiers represent different levels of the reduction workflow and require different levels of cyberinfrastructure to support. The Tiers are defined in the ODI Pipeline Software and Archive Science Requirements Document 
 
 
 
@@ -236,7 +248,7 @@ Our design will also incorporate and enable additional features such as the incl
 
 \section{Future Directions}\label{sec:future}
 
-\section{Conclusion}\label{sec:conclusion}
+\section{Conclusions}\label{sec:conclusions}
 
 
 \section*{Acknowledgment}
