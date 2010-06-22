@@ -6,3 +6,5 @@
 *.pdf
 *.bbl
 *.blg
+auto
+*.rel
