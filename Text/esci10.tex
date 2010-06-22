@@ -1,4 +1,4 @@
-
+ 
 %%*************************************************************************
 %% Legal Notice:
 %% This code is offered as-is without any warranty either expressed or
@@ -130,7 +130,7 @@ However, cutting-edge instruments that are just beginning to come online, as wel
 
 To address this changing landscape of data output from leading scientific observatories, we propose a new paradigm for the storage, analysis and archiving of astronomical digital image data. By taking advantage of
 
-The rest of this paper is arranged as follows: \S\ref{sec:current} describes the current paradigm employed by astronomers for dealing with imaging data and outline some upcoming problems with this paradigm. We detail a new paradigm for the processing of astronomical images in \S\ref{sec:rev}. In \S\ref{sec:ODI} we describe how this new paradigm applies to the ODI instrument. Finally, in \S\ref{sec:future} we explore possible future directions and in \S\ref{sec:conclusions} we present our final conclusions.
+The rest of this paper is arranged as follows: section \ref{sec:current} describes the current paradigm employed by astronomers for dealing with imaging data and outline some upcoming problems with this paradigm. We detail a new paradigm for the processing of astronomical images in section \ref{sec:rev}. In section \ref{sec:ODI} we describe how this new paradigm applies to the ODI instrument. Finally, in section \ref{sec:future} we explore possible future directions and in section \ref{sec:conclusions} we present our final conclusions.
 
 \section{The Current Paradigm for the Reduction of Astronomical Images}\label{sec:current}
 
@@ -166,8 +166,7 @@ In the case of visitor mode observing, the situation is much the same. However, 
 
 \section{A New Paradigm for Astronomical Reduction and Analysis}\label{sec:rev}
 
-Although the method of data processing described in \S\ref{sec:current} has been extremely successful in advancing astronomy for several decades, many of the new imagers described in \S\ref{sec:intro} will produce such large volumes of data that individual astronomers will have a difficult time
-processing their data by themselves. 
+Although the method of data processing described in section \ref{sec:current} has been extremely successful in advancing astronomy for several decades, many of the new imagers described in section \ref{sec:intro} will produce such large volumes of data that individual astronomers will have a difficult time processing their data by themselves. 
 
 \section{ODI as a Use Case of the New Paradigm}\label{sec:ODI}
 
@@ -201,7 +200,7 @@ For the distribution of raw data sets to the TeraGrid sites that will be used as
 
 \subsubsection{Compute Facilities}
 
-We will use supercomputers at several TeraGrid sites to provide the compute facilities to reduce the raw data and analyze the Tier 1 data. The TeraGrid is a national open scientific discovery infrastructure combining resources at eleven sites to create an integrated, persistent computational resource. Using high-performance network connections, TeraGrid provides integrated access to high-performance compute resources, and data resources and software tools around the country. Currently, TeraGrid resources include more than 2 petaflops of computing capability and more than 50 petabytes of online and archival data storage, with rapid access and retrieval over high-performance networks. With this combination of resources, the TeraGrid is the world's largest, most comprehensive distributed cyberinfrastructure for open scientific research \cite{teragrid}. In addition to automatic 
+We will use supercomputers at several TeraGrid sites to provide the compute facilities to reduce the raw data and analyze the Tier 1 data. The TeraGrid is a national open scientific discovery infrastructure combining resources at eleven sites to create an integrated, persistent computational resource. Using high-performance network connections, TeraGrid provides integrated access to high-performance compute resources, and data resources and software tools around the country. Currently, TeraGrid resources include more than 2 petaflops of computing capability and more than 50 petabytes of online and archival data storage, with rapid access and retrieval over high-performance networks. With this combination of resources, the TeraGrid is the world's largest, most comprehensive distributed cyberinfrastructure for open scientific research \cite{teragrid}. In addition to Tier 1 automatic reductions TeraGrid compute resources will be used for user directed Tier 2 and Tier 3 reductions.
 
 \subsubsection{Storage Systems}
 
@@ -217,19 +216,13 @@ The pipeline engine is the part of the system containing the actual astronomical
 
 \subsubsection{Pipeline Orchestration}
 
-The LEAD Metadata Catalog, which would be the PMD in the ODI Gateway, stores information about the contents of data files and workflows using a hybrid method developed at IU. In this method, the smallest pieces of information are stored in a relational database as name-value pairs, to support complex queries, but chunks of XML (collections of related data) are also stored. Constructing an XML document from scratch from the shredded information stored in the database is not very efficient for complex scientific schemas, but by grabbing chunks of XML from the database and putting them together, both queries and XML document construction can be done quickly. One can also easily return only a part of the full metadata (one or two chunks of XML). 
-This is more flexible than storing the complete set of metadata in one XML document.  
-Although this metadata storage method and its use by other portal components has been worked out in detail for LEAD, it will take a significant amount of work to create a hierarchy and database structure relevant to ODI data. 
+The algorithms of the pipeline engine will be orchestrated by the Open Grid Computing Environments (OGCE) toolkit. The OGCE toolkit is composed of several different pieces, called portlets, and will be coupled with the metadata catalog to track data processing and provenance. This catalog, the XML Metadata Concept Catalog (XMC Cat)\cite{jensen2008}, stores information about the contents of data files and workflows using a hybrid method developed at IU. In this method, the smallest pieces of information are stored in a relational database as name-value pairs, to support complex queries, but chunks of XML (collections of related data) are also stored. This is more flexible than storing the complete set of metadata in one XML document. The MyWorkspace Portlet provides an interface for users to the XMC Cat catalog. It creates a tree-based view for browsing workspace contents and also allows users to search and display the metadata associated with their workflows and data. The search interface is built dynamically, based on the hierarchy of the catalog. 
 
-The MyWorkspace Portlet provides a way for users to see and manage their files and workflows. It creates a tree-based view for browsing workspace contents and also allows users to search and display the metadata associated with their workflows and data. The search interface is built dynamically, based on the hierarchy of the Metadata Catalog. 
-
-The Experiment Builder Portlet uses the Workflow Composer application to allow the user to build workflows graphically. Input files, output files, and processing applications can be dragged into the work window and wired together to form a workflow that can then be launched on the TeraGrid. The Workflow Engine orchestrates the execution of the workflow, listening for notifications of progress, etc. The same portlet can be used in monitoring mode to track the progress of a run. Because this portlet does not know anything about the specific science codes that it makes available, it can also be used to make workflows for ODI data reduction. We will simply need to make  ODI image processing modules available in a form that it can use. Other modification may need to be made to accommodate special ODI-specific situations.
+The Experiment Builder portlet uses a workflow composer application to allow the user to build workflows graphically. Input files, output files, and processing applications can be dragged into the work window and wired together to form a workflow that can then be launched on the TeraGrid. OGCE internals orchestrate the execution of the workflow. The same portlet can be used in monitoring mode to track the progress of a run. In order to include IRAF algorithms in the workflow composer, they must have a standardized interface to OGCE. To insure this we will wrap the algorithms with the Generic Factory Service (GFac).
  
-The Generic Factory Service (GFac) is a component that creates web services out of command-line science applications. Although portlets use web services to do the behind-the-scenes computations, existing science codes need not be converted to web services. Instead, they can be wrapped by a service that handles the communication between the portal and the science code, and does other useful work as well. For example, the wrapper service creates a form for entering input parameters according to a list of requirements provided earlier, moves input files to where they need to be, submits the job using the command line that the science code recognizes, and handles security concerns. These Application Services are created on an as-needed basis, and live for only a short time (during which time they can be reused). This keeps the resources required to host and support multiple applications to a minimum, and a large number of applications can be available for use in the portal. 
+GFac is a component that creates web services out of command-line science applications. Although portlets use web services to do the behind-the-scenes computations, existing science codes need not be converted to web services. Instead, they can be wrapped by a service that handles the communication between the portal and the science code, and does other useful work as well. These application services are created on an as needed basis, and are short-lived. This keeps the resources required to host and support multiple applications to a minimum.
 
-GFac will be used extensively in the ODI gateway to wrap the Pan-STARRS image processing algorithms. This will enable an almost complete separation between gateway development and scientific algorithm development, allowing astronomers to write and test the data reduction code in familiar ways. Other than having to specify any changes in input parameters and run commands, substituting an updated version of an algorithm should be an easy task.
-
-The Grid Information, Proxy Management, Storage Resource Broker, and GRAM Job Submission Portlets take care of all the tasks needed to run jobs on the TeraGrid. These will obviously be used in the ODI gateway. In addition to these components, OGCE/LEAD has portlets, applications, and tools to take care of tasks like administration of the portlet (e.g., adding new portlets), allowing users to modify their personal information and do some personalization of the gateway. These will all be included in the ODI gateway. 
+The Grid Information, Proxy Management, Storage Resource Broker, and GRAM Job Submission Portlets take care of all the tasks needed to run jobs on the TeraGrid. These will obviously be used in the ODI gateway. In addition to these components, OGCE has portlets, applications, and tools to take care of tasks like administration of the gateway (e.g., adding new portlets), allowing users to modify their personal information and personalize the gateway. 
 
 \subsubsection{Science Gateway}
 
@@ -243,9 +236,7 @@ The ODI Science Gateway Prototype aligns quite nicely with the LEAD Gateway func
 
 \subsection{A Detailed Workflow for ODI Images}\label{sec:workflow}
 
-Here we detail the steps in a workflow for processing a set of images. For convenience, we define several conceptual stages of the reduction and analysis called ``Tier''. Each of the Tiers represent different levels of the reduction workflow and require different levels of cyberinfrastructure to support. The Tiers are defined in the ODI Pipeline Software and Archive Science Requirements Document 
-
-
+Here we detail the steps in a workflow for processing a set of images. We follow the workflow from the acquisition of data at the telescope through Tier 2 processing directed by the end user. Each of the Tiers represent different levels of the reduction workflow and require different levels of cyberinfrastructure to support, see section \ref{sec:tiers} for a definition of each of the Tiers.
 
 At IU, data will reside on both the Data Capacitor (DC) and the Massive Data Storage System (MDSS).
 The Data Capacitor will host 200TB of short to mid-term storage for the analysis and production of Tier 1 and Tier 2 data products. Users will be granted quotas based on the projected amount of data that will be collected during their observations. In addition to quotas being granted to users with observing time, some amount of space will be made available to users interested in using archival data only. To prevent overruns on the Data Capacitor space, files that have been pulled from the archive and remain unused for some time will be deleted. However, the user will be able to quickly and easily restore them if they are needed again.
@@ -254,7 +245,7 @@ The MDSS will host the ODI archive, which will store all raw science images and 
 Access to data in the archive will be restricted to the PI, and any users that he or she specifies, during the 18 month proprietary period following the observation. After this time, the raw data will become public. The PMD will contain searchable metadata entries for the data products, as well as the metadata for the processing itself (the workflow). The latter will allow the reproduction of data products from the raw archived data. 
 
 Data transfer from the WIYN telescope to IU begins once an observation has been taken, the data and metadata files are available, and the transfer to the Data Capacitor has been queued. 
-The summit facility will have a small disk buffer that will provide two weeks of raw data storage to smooth the data flow and mitigate interruptions due to network outages and system maintenance. As detailed in \S\ref{sec:components} we have established a stable Data Capacitor mount from Tucson to IU which can meet the required data transfer rate. Next, the metadata file is ingested into the PMD. This is followed by copying the files from the Data Capacitor to the archive. Once this transfer is completed, the PMD communicates to the summit local buffer that the files have been replicated. They are then deleted from the local buffer and the transfer is removed from the queue.
+The summit facility will have a small disk buffer that will provide two weeks of raw data storage to smooth the data flow and mitigate interruptions due to network outages and system maintenance. As detailed in section \ref{sec:components} we have established a stable Data Capacitor mount from Tucson to IU which can meet the required data transfer rate. Next, the metadata file is ingested into the PMD. This is followed by copying the files from the Data Capacitor to the archive. Once this transfer is completed, the PMD communicates to the summit local buffer that the files have been replicated. They are then deleted from the local buffer and the transfer is removed from the queue.
 
 New images are queued for Tier 1 processing by OGCE following the ingestion of the metadata and the verification of the files on the DC and MDSS. 
 Based on the metadata associated with the image (e.g., observing mode, filter, moon phase, etc.), appropriate master calibrations and processing parameters are selected. The proper parameters for the processing engine and the TeraGrid resource best suited for the job are determined based on these selections. The workflow system then takes the input data, calibration data, and run parameters and generates the appropriate batch submission script for the TeraGrid resource that will run the job. For TeraGrid resources with Data Capacitor access the input data will already be available on the supercomputer. The job is executed on the TeraGrid resource and the results are written back to the Data Capacitor. The metadata is then updated with information about the job, as well as statistics of the result data. Once the Tier 1 processing has been confirmed the PI is notified. The PI can then log into the science gateway to view his or her Tier 1 processed data and begin Tier 2 processing or initiate a download.
@@ -280,12 +271,17 @@ Our design will also incorporate and enable additional features such as the incl
 
 \section{Future Directions}\label{sec:future}
 
+There are many potential applications of this new paradigm. Clearly, such a dramatic shift in the way that image processing is done will require significant changes in the preconceptions of many astronomers. As ODI is one of the first instruments to use this new approach, the adoption of it in the wider astronomical community will depend heavily on its success. To insure success of the project, several design, development and testing tasks must be completed. The various software and hardware components must be more tightly integrated and tested for fault tolerance. In addition, preliminary testing of the entire end to end system must be undertaken by several groups of potential users, which will test the limitations of the system in different ways. Once the system is functioning, ongoing support will be required to address any evolution in the underlying software and requests for additional functionality. In addition, education and outreach on the potential applications of the system and its proper uses in the astronomical community will be key. 
+
 \section{Conclusions}\label{sec:conclusions}
 
+In this paper we have introduced a potential new paradigm for astronomical image processing. 
 
 \section*{Acknowledgment}
 
-The authors would like to thank... \cite{simms2007}
+The authors would like to thank {\bf THANKS HERE}
+
+This material is based upon work supported by the National Science Foundation under Grants No. ACI-0338618l, OCI-0451237, OCI-0535258, OCI-0504075, and CNS-0521433. This work was supported in part by Shared University Research grants from IBM, Inc. to Indiana University. Any opinions, findings and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation. 
 
 \bibliographystyle{IEEEtran}
 \bibliography{general}
