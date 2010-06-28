@@ -1,4 +1,3 @@
- 
 %%*************************************************************************
 %% Legal Notice:
 %% This code is offered as-is without any warranty either expressed or
@@ -81,10 +80,10 @@
 Bloomington, Indiana 47408\\
 Email: scamicha@indiana.edu}
 \IEEEauthorblockA{\IEEEauthorrefmark{2}WIYN Consortium Inc.\\
-Tucson, AZ 85726\\
+Tucson, Arizona 85726\\
 Email: knezek@noao.edu}
-\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy\\
-San Francisco, California 96678-2391\\
+\IEEEauthorblockA{\IEEEauthorrefmark{3}National Optical Astronomy Observatory\\
+Tucson, Arizona 85726\\
 Email: bstobie@noao.edu}}
 
 % use for special paper notices
@@ -96,7 +95,7 @@ Email: bstobie@noao.edu}}
 
 \begin{abstract}
 %\boldmath
-The abstract goes here.
+In this article we propose a revolutionary new paradigm for the processing and analysis of astronomical image data. Included is a brief discussion of the current paradigm in astronomical image processing. We describe a blueprint for a centralized data repository and processing system, which leverages national cyberinfrastructure. The upcoming One Degree Imager (ODI) instrument, to be installed at the WIYN observatory in 2011, is examined as an ideal use case. Details on the major components and a detailed workflow in the case of data processing for the ODI instrument are included. 
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -122,13 +121,13 @@ Image processing, Image analysis, Astronomy, Pipeline processing
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
-
-
 \section{Introduction}\label{sec:intro}
+
+One of the principle methods of scientific discovery in astronomy is via the analysis of astronomical images. Following the replacement of photographic plates by charged-coupled devices (CCDs) in the 1970s and 1980s, the role of specialized astronomical software in image reduction and analysis has grown steadily. Today, typical CCD imagers are 8K$\times$8K pixels in size or smaller, and the output data volume is fairly small by most standards. Because of this, the reduction and analysis processes are carried out by individual researchers using their own computational and storage resources. Many national entities (e.g. the National Optical Astronomy Observatory (NOAO) and NASA) have devoted resources to developing and supporting software packages for image analysis that can be run on personal resources.  
 
 However, cutting-edge instruments that are just beginning to come online, as well as instruments planned for the not too distant future will produce data in volumes that a single investigator can not hope to store, analyze, and archive on their own. Currently, the Pan-STARRS gigapixel imager is producing more than 1 TB of data per day. The Solar Dynamics Observatory, a space based observatory, transmits 1.5 TB of raw data to the ground every day. Other instruments in their design or construction phases include the One Degree Imager, capable of producing 4 TB per day; the Large Synoptic Sky Survey, which will produce 30 TB of data per day; and the Joint Dark Energy Mission, a space based observatory capable of producing several terabytes of data per day. Clearly, these data volumes are much larger than the typical astronomer is accustomed to dealing with and most observational astronomers lack access to the resources that would be required to handle these amounts of data.
 
-To address this changing landscape of data output from leading scientific observatories, we propose a new paradigm for the storage, analysis and archiving of astronomical digital image data. By taking advantage of
+To address this changing landscape of data output from leading scientific observatories, we propose a new paradigm for the storage, analysis and archiving of astronomical digital image data. By taking advantage of national cyberinfrastructure and the parallel nature of image processing, the burden of storing, managing, and processing the data can be moved from the individual to more capable supercomputing resources.  
 
 The rest of this paper is arranged as follows: section \ref{sec:current} describes the current paradigm employed by astronomers for dealing with imaging data and outline some upcoming problems with this paradigm. We detail a new paradigm for the processing of astronomical images in section \ref{sec:rev}. In section \ref{sec:ODI} we describe how this new paradigm applies to the ODI instrument. Finally, in section \ref{sec:future} we explore possible future directions and in section \ref{sec:conclusions} we present our final conclusions.
 
@@ -166,7 +165,15 @@ In the case of visitor mode observing, the situation is much the same. However, 
 
 \section{A New Paradigm for Astronomical Reduction and Analysis}\label{sec:rev}
 
-Although the method of data processing described in section \ref{sec:current} has been extremely successful in advancing astronomy for several decades, many of the new imagers described in section \ref{sec:intro} will produce such large volumes of data that individual astronomers will have a difficult time processing their data by themselves. 
+Although the method of data processing described in section \ref{sec:current} has been extremely successful in advancing astronomy for several decades, many of the new imagers described in section \ref{sec:intro} will produce such large volumes of data that individual astronomers will have a difficult time processing their data by themselves. Since the current paradigm relies on the distribution of raw or Tier 1 processed data and the subsequent reduction of the data by the individual researcher, there would be a large demand on both the storage and processing resources of the individual. Additionally, researchers would need adequate bandwidth to their storage resource to download data, or some mechanism other than the network for data distribution would need to be implemented. 
+
+The current paradigm is a highly distributed model with a large degree of heterogeneity in the distribution mechanism and the throughput of the distributed sites. Most researchers either take media with them from the observatory or download data on links ranging in bandwidth from 10 Mbit/s to 1 Gbit/s and each researchers storage and processing resources are, in effect, one of the distributed sites. We propose to instead use national cyberinfrastructure (networks, storage, and compute resources) to provide a centralized catalog, storage repository, and processing environment for astronomical images. 
+
+The advantages to this new approach are numerous. The chief advantage is lowering the requirement of equipment on individual researchers. Ultimately, a scientist is interested in a derived data product which will further her research goals. This could be in the form of graphs, tables, or other data characterizing the physical phenomenon she is investigating. Typically, the data volume that these derived data products represent is extremely small. The closer a scientist can get to this final stage of their research using a centralized system, the more their resource burden is reduced. For example, if the centralized service provided only Tier 1 reduced data (as many data processing systems do today) the researcher no longer has to be concerned with identifying and transferring appropriate calibration frames, or providing processing power to carry out the calibration. This can be a very large reduction in data volume for many programs. If the service provided Tier 2 functionality, the burden is further reduced, as users only need to transfer stacked images, which can result in a several-fold data volume decrease. Finally, providing Tier 3 functionality, would allow the user to only worry about their final derived data, nearly eliminating the need for individuals to provide their own resources. 
+
+A centralized system also provides a degree of consistency in the reduction process. Since the Tier 1 reductions can be automated, they will be performed in a standardized way so that users can be assured that the process has been consistently applied. This consistency can encourage inter-comparison of observations, both between observing groups and between an individual's data and publicly available data. This consistency, coupled with the centralized nature of the storage and compute resources, allows for an unprecedented level of collaboration. By introducing social and scientific networking tools into the centralized system one can enable scientific discovery through collaborative efforts which would be unlikely or impossible in the current paradigm. 
+
+In the next section we explore the upcoming ODI instrument as a use case for this new paradigm. With the massive data volumes the instrument is expected to produce, and the complex new technologies embodied in the instrument, it is an ideal candidate for such a paradigm shift. We propose to national resources made available by the TeraGrid and open source software infrastructure developed at IU, called the Open Grid Computing Environments (OGCE), to enable the centralized system envisaged in this section. 
 
 \section{ODI as a Use Case of the New Paradigm}\label{sec:ODI}
 
@@ -196,7 +203,7 @@ we can achieve a throughput between 20 and 60 MB/s over this connection. We meas
 the throughput by copying an actual compressed image with a file size of roughly 1GB from NOAO to
 the Data Capacitor. We copied one image every three minutes, for the entire test period throughout the month of August 2009.
 
-For the distribution of raw data sets to the TeraGrid sites that will be used as compute facilities, we plan to use the TeraGrid network, a dedicated 10G research network. The same network will be used to return the data products resulting from the processing. The Data Capacitor has been used in conjunction with the TeraGrid network to facilitate distributed workflows at several TeraGrid sites including {\bf NEED LIST HERE AND CITATIONS!!!}, and will be used in a similar manner for ODI data. The amount of data to be transferred is of the same order as the amount of raw data, but will include the returned data products and calibration images so may exceed the raw data rate by a factor of two or more. However, this is not anticipated to be a problem with the TeraGrid network since it has an order of magnitude more bandwidth than the NOAO to IU network.
+For the distribution of raw data sets to the TeraGrid sites that will be used as compute facilities, we plan to use the TeraGrid network, a dedicated 10G research network. The same network will be used to return the data products resulting from the processing. The Data Capacitor has been used in conjunction with the TeraGrid network to facilitate distributed workflows at several TeraGrid sites including the Pittsburgh Supercomputing Center, the National Center for Supercomputing Applications \cite{henschel2010}, and the Texas Advanced Computing Center \cite{horowitz2010}; and will be used in a similar manner for ODI data. The amount of data to be transferred is of the same order as the amount of raw data, but will include the returned data products and calibration images so may exceed the raw data rate by a factor of two or more. However, this is not anticipated to be a problem with the TeraGrid network since it has an order of magnitude more bandwidth than the NOAO to IU network.
 
 \subsubsection{Compute Facilities}
 
@@ -275,9 +282,9 @@ There are many potential applications of this new paradigm. Clearly, such a dram
 
 \section{Conclusions}\label{sec:conclusions}
 
-In this paper we have introduced a potential new paradigm for astronomical image processing. 
+In this paper we have introduced a potential new paradigm for astronomical image processing. For many astronomical image processing applications this new paradigm can result in increased efficiency and scientific discovery. The ODI instrument provides an ideal test case for this new way of image processing and analysis. By implementing a system using several different TeraGrid resources, orchestrated by the OGCE software toolkit, researchers can receive most of the functionality they currently have with desktop applications, such as IRAF, in a centralized system. The obvious benefits of such a system are lowering the barrier to entry for using a cutting-edge instrument, and reducing the amount of personal resources required by individual researchers. Less obvious, but perhaps even more compelling, are the benefits of access to a centralized repository of consistently processed data and the ability to effectively collaborate with other users of the instrument via the social networks aspect of the science gateway. Hopefully, this new vision represents a step into the future of astronomical image processing. 
 
-\section*{Acknowledgment}
+\section*{Acknowledgments}
 
 The authors would like to thank {\bf THANKS HERE}
 
